@@ -17,13 +17,18 @@
 </head>
 <body>
     <nav class="uk-navbar-container nav-full" uk-navbar>
-        <div class="uk-navbar-center">
+        <div class="uk-navbar-left">
             <ul class="uk-navbar-nav">
-                <li><a href="#modal-rules" uk-toggle>Правила</a></li>
-                <li><a href="#modal-contacts" uk-toggle>Контакты</a></li>
                 <li><a href="/"><h3 class="uk-text-lead title"><?php echo $_ENV['ST_NAME'] ?></h3></a></li>
-                <li><a target="_blank" href="<?php echo $links['vk'] ?>">Группа ВК</a></li>
-                <li><a target="_blank" href="<?php echo $links['support'] ?>">Поддержка</a></li>
+            </ul>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+
+                <?php if (empty($_SESSION['user'])){echo '<li><a href="/login">Войти</a></li>';} ?>
+                <?php if (empty($_SESSION['user'])){echo '<li><a href="/register">Создать аккаунт</a></li>';} ?>
+                <?php if (!empty($_SESSION['user'])){echo '<li><a href="/logout">Выйти</a></li>';} ?>
+
             </ul>
         </div>
     </nav>
@@ -33,10 +38,8 @@
     <nav class="uk-navbar-container mobile-menu" uk-navbar>
         <div class="uk-navbar-center">
             <ul class="uk-navbar-nav nav-mobile">
-                <li><a href="#modal-rules" uk-toggle>Правила</a></li>
-                <li><a href="#modal-contacts" uk-toggle>Контакты</a></li>
-                <li><a target="_blank" href="<?php echo $links['vk'] ?>">Группа ВК</a></li>
-                <li><a target="_blank" href="<?php echo $links['support'] ?>">Поддержка</a></li>
+                <li><a href="/login" uk-toggle>Войти</a></li>
+                <li><a href="/register" uk-toggle>Создать аккаунт</a></li>
             </ul>
         </div>
     </nav>

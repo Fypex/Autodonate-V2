@@ -1,6 +1,4 @@
 <?php 
-use Controllers\BuyProductsController as BuyProduct;
-use Controllers\PayFreeKassaController as PayFreeKassa;
 
 
 Flight::route('/', function(){
@@ -16,23 +14,22 @@ Flight::route('/', function(){
   ));
 });
 
-Flight::route('POST /order', function(){
-    BuyProduct::order($_POST['name'],$_POST['id']);
-});
+//Flight::route('POST /order', function(){
+//    BuyProduct::order($_POST['name'],$_POST['id']);
+//});
+//
+//Flight::route('POST /pay/success', function(){
+//    PayFreeKassa::pay($_POST);
+//});
 
-Flight::route('POST /pay/success', function(){
-    PayFreeKassa::pay($_POST);
-});
 
+Flight::route('GET /dashboard', array(new Controllers\dashboard\DashboardController(), 'index'));
+Flight::route('GET /login', array(new Controllers\auth\AuthController(), 'login_page'));
+Flight::route('GET /register', array(new Controllers\auth\AuthController(), 'register_page'));
+Flight::route('GET /logout', array(new Controllers\auth\AuthController(), 'logout'));
+Flight::route('POST /login', array(new Controllers\auth\AuthController(), 'login'));
+Flight::route('POST /register', array(new Controllers\auth\AuthController(), 'register'));
 
-Flight::route('/login', function(){
-    Flight::render('login');
-});
-Flight::route('GET /register', function(){
-    Flight::render('register');
-});
-
-Flight::route('POST /register', array(new Controllers\panel\AuthController(), 'register'));
 
 Flight::route('/success', function(){
     Flight::render('success');

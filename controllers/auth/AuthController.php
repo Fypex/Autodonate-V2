@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\panel;
+namespace Controllers\auth;
 
 use Controllers\Controller;
 use Flight;
@@ -8,6 +8,28 @@ use Models\Users;
 
 class AuthController extends Controller
 {
+    public function login_page(){
+
+        if ($_SESSION['user']){
+            Flight::redirect('/dashboard');
+        }else{
+            Flight::render('login');
+        }
+    }
+
+    public function register_page(){
+        if ($_SESSION['user']){
+            Flight::redirect('/dashboard');
+        }else{
+            Flight::render('register');
+        }
+    }
+
+    public function logout(){
+        unset($_SESSION['user']);
+        Flight::redirect('/login');
+    }
+
     public function register(){
         $request = Flight::request()->data;
 
@@ -15,12 +37,34 @@ class AuthController extends Controller
         $this->validate_email($request->email);
         $this->validate_password($request->password, $request->password_repeat);
 
-        $response = Users::register(trim($request->login), trim($request->email), trim($request->password));
+        $response = Users::register(trim($request->login), trim($request->email), password_hash(trim($request->password), PASSWORD_DEFAULT));
         if ($response){
             Controller::response(200,'redirect');
         }
     }
 
+    public function login(){
+        $request = Flight::request()->data;
+
+
+        $user = Users::get_user_login(trim($request->login));
+
+        if (empty($user->login)){
+            Controller::response(400,'Не верный логин или пароль');
+            exit;
+        }
+        if (!empty($user->login)){
+            if (password_verify($request->password, $user->password)){
+                $_SESSION['user'] = $user;
+                Controller::response(200,'redirect');
+            }else{
+                Controller::response(400,'Не верный логин или пароль');
+                exit;
+            }
+        }
+        exit;
+
+    }
 
     private function validate_login($login){
 
@@ -52,7 +96,7 @@ class AuthController extends Controller
             exit;
         }
 
-        $user = Users::get_user_login(trim($email));
+        $user = Users::get_user_email(trim($email));
 
         if ($user){
             Controller::response(400,'Такая почта уже зарегистрирована');
@@ -67,7 +111,7 @@ class AuthController extends Controller
         }
 
         if (trim($password) != trim($password_repeat)){
-            Controller::response(400,'Пароли не совпадают   ');
+            Controller::response(400,'Пароли не совпадают');
             exit;
         }
     }

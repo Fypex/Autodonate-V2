@@ -16,7 +16,6 @@
                                     </div>
                                     <div class="col-md-12">
                                         <input type="hidden" value="<?php echo $product['id']?>" name="id">
-                                        <input class="uk-input" type="text" placeholder="Ваш ник" name="name">
                                     </div>
                                     <div class="col-md-12 uk-margin-small-top">
                                         <a id="<?php echo $product['id']?>" class="uk-button uk-button-default uk-width-2-2" onclick="buyProduct(this)">Купить</a>
@@ -30,7 +29,7 @@
             </div>
         </div>
 
-        <div class="uk-card uk-card-default uk-card-body main-card mt-3">
+        <div style="margin-top: 25px" class="uk-card uk-card-default uk-card-body main-card">
             <h2 class="uk-text-left uk-inline-clip">Ключи</h2>
             <div class="row">
             <?php foreach ($products as $product): ?>
@@ -45,8 +44,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <input type="hidden" value="<?php echo $product['id']?>" name="id">
-                                        <input class="uk-input" type="text" placeholder="Ваш ник" name="name">
-                                    </div>
+                                </div>
                                     <div class="col-md-12 uk-margin-small-top">
                                         <a id="<?php echo $product['id']?>" class="uk-button uk-button-default uk-width-2-2" onclick="buyProduct(this)">Купить</a>
                                     </div>
@@ -58,16 +56,8 @@
             <?php endforeach ?>
             </div>
         </div>
+        <script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
 
-        <div class="uk-card uk-card-default uk-card-body uk-margin-medium-top uk-padding-remove">
-            <script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
-
-            <!-- VK Widget -->
-            <div id="vk_groups"></div>
-            <script type="text/javascript">
-                VK.Widgets.Group("vk_groups", {mode: 4,width: 'auto',height: '350px'}, <?php echo $widget['id'] ?>);
-            </script>
-        </div>
     </div>
 
 <?php Flight::render('layouts/footer'); ?>
