@@ -12,7 +12,6 @@
 		},
 		"files": [
 			"config/config.php",
-            "config/products.php",
 			"config/settings.php",
 			"routes/routes.php"
 		]

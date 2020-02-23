@@ -2,19 +2,22 @@
 
 namespace Controllers\dashboard;
 
+use Controllers\auth\AuthController;
 use Controllers\Controller;
 use Flight;
 use Models\Users;
+use Models\Pay;
 
-class DashboardController
+class DashboardController extends AuthController
 {
 
     public function index(){
-        if (empty($_SESSION['user'])){
-            Flight::redirect('/login');
-        }else{
-            Flight::render('dashboard/index');
-        }
+
+        Flight::render('dashboard/index', [
+            'user' => Users::get_user_login($_SESSION['user']['login']),
+            'payments' => Pay::getPayments()
+        ]);
+
     }
 
 }

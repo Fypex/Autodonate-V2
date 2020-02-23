@@ -5,7 +5,7 @@
             <h2 class="uk-text-left uk-inline-clip">Привилегии</h2>
             <div class="row">
             <?php foreach ($products as $product): ?>
-                <?php if ($product['type'] == 'privilage'): ?>
+
                     <div class="col-md-4">
                         <div class="uk-card uk-card-default uk-card-body card-products uk-margin-small-top">
                             <form id="buy-product-<?php echo $product['id']?>" method="post">
@@ -14,6 +14,16 @@
                                         <p class="uk-margin-remove title-product"><?php echo $product['name']?></p>
                                         <p class="uk-margin-remove price-product"><?php echo $product['price']?>руб</p>
                                     </div>
+                                    <div class="col-md-12 uk-text-left title-product-wrapper">
+                                    <?php if ($product['period']): ?>
+                                        <p class="uk-margin-remove title-product">Дней:</p>
+                                        <p class="uk-margin-remove price-product"><?php echo $product['amount_days']?></p>
+                                    <?php else: ?>
+                                        <p class="uk-margin-remove title-product">Дней:</p>
+                                        <p class="uk-margin-remove price-product">Навсегда</p>
+                                    <?php endif ?>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <input type="hidden" value="<?php echo $product['id']?>" name="id">
                                     </div>
@@ -24,7 +34,6 @@
                             </form>
                         </div>
                     </div>
-                <?php endif ?>
             <?php endforeach ?>
             </div>
         </div>
@@ -56,7 +65,6 @@
             <?php endforeach ?>
             </div>
         </div>
-        <script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
 
     </div>
 

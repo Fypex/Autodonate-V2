@@ -2,32 +2,39 @@
 
 namespace Models;
 
-use \RedBeanPHP\R as R;
-
-class Users extends R
+class Users extends DB
 {
 
     static public function get_user_email($email){
 
-       return Users::findOne('users','email = ?', [$email]);
+        $user = Users::pdo()->prepare('SELECT * FROM users WHERE email = ?');
+        $user->execute([$email]);
+        return $user->fetch();
 
     }
 
     static public function get_user_login($login){
 
-        return Users::findOne('users', 'login = ?', [$login]);
+        $user = Users::pdo()->prepare('
+          SELECT * FROM users
+          LEFT JOIN users_role on users_role.user_id = users.id
+          LEFT JOIN roles on roles.id = users_role.role_id
+          LEFT JOIN money on money.id = users.id
+          WHERE login = ?');
+        $user->execute([$login]);
+        return $user->fetch();
 
     }
 
     static public function register($login, $email, $password){
 
-        $user = Users::dispense('users');
+        $user = Users::pdo()->prepare('
+          INSERT INTO users(login, email, password ,role, money, created, updated) 
+          VALUES(?, ?, ?, ?,?, ?, ?);
+         ');
 
-        $user->login = $login;
-        $user->email = $email;
-        $user->password = $password;
+        return $user->execute([$login, $email, $password, 'user', 0, time(), time()]);
 
-        return Users::store($user);
 
     }
 

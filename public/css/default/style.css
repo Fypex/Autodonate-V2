@@ -3,8 +3,8 @@ body{
 	min-height: 100vh;
 	font-family: 'Montserrat', sans-serif;
 	text-align: center;
+	background: url(/img/background.jpg);
 }
-
 .title{
 	margin-bottom: 5px;
 }
@@ -76,6 +76,9 @@ body{
 	left: 0;
 
 }
+.uk-button{
+	padding: 0 15px;
+}
 @media screen and (max-width: 767px ){
 	.title-product {
 		display: inline-block;
@@ -100,13 +103,13 @@ body{
 		margin: 0 auto;
 	}
 }
-@media screen and (max-width: 411px ){
+@media screen and (max-width: 411px){
 	.title-mobile{
 		font-size: 35px;
 	}
-	.uk-navbar-nav{
-		display: none;
-	}
+	/*.uk-navbar-nav{*/
+		/*display: none;*/
+	/*}*/
 	.uk-navbar-nav>li{
 		height: 40px;
 	}

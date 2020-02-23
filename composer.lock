@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gabordemooij/redbean.git",
-                "reference": "24231d90190e1bcf6c25ad1b234ecce96915ea7f"
+                "reference": "aebea88e5b87d7dca914e7ba5437de5e6f4e3acb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/24231d90190e1bcf6c25ad1b234ecce96915ea7f",
-                "reference": "24231d90190e1bcf6c25ad1b234ecce96915ea7f",
+                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/aebea88e5b87d7dca914e7ba5437de5e6f4e3acb",
+                "reference": "aebea88e5b87d7dca914e7ba5437de5e6f4e3acb",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
             "keywords": [
                 "orm"
             ],
-            "time": "2020-02-07T14:37:01+00:00"
+            "time": "2020-02-12T16:48:02+00:00"
         },
         {
             "name": "goldman40/php-rcon-minecraft",

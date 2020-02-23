@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function login_page(){
 
-        if ($_SESSION['user']){
+        if (!empty($_SESSION['user'])){
             Flight::redirect('/dashboard');
         }else{
             Flight::render('login');
@@ -18,7 +18,7 @@ class AuthController extends Controller
     }
 
     public function register_page(){
-        if ($_SESSION['user']){
+        if (!empty($_SESSION['user'])){
             Flight::redirect('/dashboard');
         }else{
             Flight::render('register');
@@ -26,7 +26,8 @@ class AuthController extends Controller
     }
 
     public function logout(){
-        unset($_SESSION['user']);
+        unset($_SESSION);
+        session_destroy();
         Flight::redirect('/login');
     }
 
@@ -46,21 +47,26 @@ class AuthController extends Controller
     public function login(){
         $request = Flight::request()->data;
 
-
         $user = Users::get_user_login(trim($request->login));
 
-        if (empty($user->login)){
+        if (empty($user['login'])){
             Controller::response(400,'Не верный логин или пароль');
             exit;
         }
-        if (!empty($user->login)){
-            if (password_verify($request->password, $user->password)){
+
+        if (!empty($user['login'])){
+
+            if (password_verify($request->password, $user['password'])){
+
+                unset($user['password']);
+
                 $_SESSION['user'] = $user;
-                Controller::response(200,'redirect');
+
             }else{
                 Controller::response(400,'Не верный логин или пароль');
                 exit;
             }
+
         }
         exit;
 
@@ -74,8 +80,8 @@ class AuthController extends Controller
         }
 
 
-        if (!preg_match('/^[0-9a-z]+$/i', trim($login))){
-            Controller::response(400,'Толко английские буквы и цифры');
+        if (!preg_match('/^[a-zA-Z0-9_]+$/i', trim($login))){
+            Controller::response(400,'Только латиница, цифры и нижнее подчеркивание');
             exit;
         }
 
@@ -113,6 +119,30 @@ class AuthController extends Controller
         if (trim($password) != trim($password_repeat)){
             Controller::response(400,'Пароли не совпадают');
             exit;
+        }
+    }
+
+    public static function auth(){
+
+        $access = [];
+        foreach (Flight::router()->getRoutes() as $key => $route){
+
+            $access[$key] = [$route->pattern => $route->pass];
+
+        }
+        if (!empty($access[$_SERVER['PATH_INFO']])){
+            $user = Users::get_user_login($_SESSION['user']['login']);
+            $roles = explode('|',$access[$_SERVER['PATH_INFO']]);
+            $count = 0;
+            foreach ($roles as $role){
+                if($user['role'] == $role){
+                    $count++;
+                }
+            }
+            if ($count == 0){
+                Flight::render('errors/404');
+                exit;
+            }
         }
     }
 

@@ -74,4 +74,33 @@ $(function(){
     });
 });
 
-UIkit.modal('#modal-rules');
+
+$(function(){
+    $('#pay').on('submit', function(e){ // Айди формы
+        e.preventDefault();
+        var $that = $(this),
+            formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
+        $.ajax({
+            url: '/dashboard/pay',
+            type: 'POST',
+            contentType: false, // важно - убираем форматирование данных по умолчанию
+            processData: false, // важно - убираем преобразование строк по умолчанию
+            data: formData,
+            success: function(data){
+
+                if(data['status'] === 'success'){
+
+                    UIkit.modal('#payment_iframe_box').show();
+                    $('.payment_iframe').prop('src', data['message']);
+
+                }
+
+            },
+            error: function (data) {
+
+                console.log(data);
+
+            }
+        });
+    });
+});

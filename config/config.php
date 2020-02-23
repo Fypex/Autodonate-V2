@@ -1,35 +1,34 @@
 <?php
 
-use \RedBeanPHP\R;
 use Symfony\Component\Dotenv\Dotenv;
+use Models\DB;
 
 $env = new Dotenv();
 $env->load('../.env');
 
+
 Flight::set('flight.views.path', $_ENV['VIEW_FOLDER']);
+Flight::set('flight.log_errors', $_ENV['SHOW_ERRORS']);
+Flight::set('flight.handle_errors', $_ENV['SHOW_ERRORS']);
 
-R::setup( 'mysql:host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_BASE'].'',$_ENV['DB_USER'],$_ENV['DB_PASS']);
 
-if (!R::testConnection()){
 
-    if (empty($_ENV['DB_BASE']) and empty($_ENV['DB_USER'])and empty($_ENV['DB_PASS'])){
+if (!DB::testConnection()) {
 
-        Flight::render($_ENV['VIEW_FOLDER'].'/errors/no_сonnection.php',array(
+    if (empty($_ENV['DB_BASE']) and empty($_ENV['DB_USER']) and empty($_ENV['DB_PASS'])) {
+
+        Flight::render('panel/errors/no_сonnection.php', array(
             'error' => $_ENV['NO_CONNECT_ERROR'],
             'message' => $_ENV['NO_DATA_MESSAGE'],
         ));
 
-    }else{
+    } else {
 
-        Flight::render($_ENV['VIEW_FOLDER'].'/errors/no_сonnection.php',array(
+        Flight::render('panel/errors/no_сonnection.php', array(
             'error' => $_ENV['NO_CONNECT_ERROR'],
             'message' => $_ENV['NO_CONNECT_MESSAGE'],
         ));
 
     }
-
-
-
-    exit();
+    exit;
 }
-

@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^Ваш домен$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^www.Ваш домен$
+RewriteCond %{HTTP_HOST} ^autodonate.loc$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.autodonate.loc$
 RewriteCond %{REQUEST_URI} !public/
 RewriteRule (.*) /public/$1 [L]

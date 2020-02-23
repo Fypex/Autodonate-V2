@@ -12,11 +12,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.20/css/uikit.min.css">
 
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/<?php echo $_ENV['ST_THEME'] ?>/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&subset=cyrillic">
 </head>
 <body>
-    <nav class="uk-navbar-container nav-full" uk-navbar>
+    <nav class="uk-navbar-container nav-full uk-navbar-transparent" uk-navbar>
         <div class="uk-navbar-left">
             <ul class="uk-navbar-nav">
                 <li><a href="/"><h3 class="uk-text-lead title"><?php echo $_ENV['ST_NAME'] ?></h3></a></li>
@@ -27,7 +27,10 @@
 
                 <?php if (empty($_SESSION['user'])){echo '<li><a href="/login">Войти</a></li>';} ?>
                 <?php if (empty($_SESSION['user'])){echo '<li><a href="/register">Создать аккаунт</a></li>';} ?>
+                <?php if ($user['role'] == 'admin'){echo '<li><a href="/panel">панель</a></li>';} ?>
+                <?php if (!empty($_SESSION['user'])){echo '<li><a href="/dashboard">Личный кабинет</a></li>';} ?>
                 <?php if (!empty($_SESSION['user'])){echo '<li><a href="/logout">Выйти</a></li>';} ?>
+
 
             </ul>
         </div>
@@ -35,11 +38,15 @@
 
 
     <h3 id="menu" class="uk-text-lead title uk-margin-remove title-mobile"><?php echo $_ENV['ST_NAME'] ?></h3>
-    <nav class="uk-navbar-container mobile-menu" uk-navbar>
+    <nav class="uk-navbar-container mobile-menu uk-navbar-transparent" uk-navbar>
         <div class="uk-navbar-center">
             <ul class="uk-navbar-nav nav-mobile">
-                <li><a href="/login" uk-toggle>Войти</a></li>
-                <li><a href="/register" uk-toggle>Создать аккаунт</a></li>
+                <?php if (empty($_SESSION['user'])){echo '<li><a href="/login">Войти</a></li>';} ?>
+                <?php if (empty($_SESSION['user'])){echo '<li><a href="/register">Создать аккаунт</a></li>';} ?>
+
+                <?php if ($user['role'] == 'admin'){echo '<li><a href="/panel">панель</a></li>';} ?>
+                <?php if (!empty($_SESSION['user'])){echo '<li><a href="/dashboard">Личный кабинет</a></li>';} ?>
+                <?php if (!empty($_SESSION['user'])){echo '<li><a href="/logout">Выйти</a></li>';} ?>
             </ul>
         </div>
     </nav>
