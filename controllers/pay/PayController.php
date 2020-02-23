@@ -34,7 +34,7 @@ class PayController
 
         Flight::json([
             'status' => 'success',
-            'message' => 'http://www.free-kassa.ru/merchant/cash.php?m='.$freekassa['public'].'&oa='.$request['amount'].'&s='.$hash.'&o='.$id
+            'message' => 'https://www.free-kassa.ru/merchant/cash.php?m='.$freekassa['public'].'&oa='.$request['amount'].'&s='.$hash.'&o='.$id
         ]);
     }
 

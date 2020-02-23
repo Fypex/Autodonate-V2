@@ -7,7 +7,7 @@
                     <ul class="uk-navbar-nav">
 
 
-                        <li class="uk-display-inline"><a><img width="25px" class="uk-margin-small-right" src="https://minotar.net/avatar/sky007" alt="avatar"> <?php echo $user['login'] ?></a></li>
+                        <li class="uk-display-inline"><a><img width="25px" class="uk-margin-small-right" src="https://minotar.net/avatar/<?php echo $user['login'] ?>" alt="avatar"> <?php echo $user['login'] ?></a></li>
                         <?php if (!empty($payments)): ?>
                             <li><a href="#pay_modal" uk-toggle>Пополнить</a></li>
                         <?php endif ?>

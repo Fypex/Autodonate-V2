@@ -11,7 +11,7 @@ class Users extends DB
           SELECT * FROM users
           LEFT JOIN users_role on users_role.user_id = users.id
           LEFT JOIN roles on roles.id = users_role.role_id
-          LEFT JOIN money on money.id = users.id
+          LEFT JOIN money on money.user_id = users.id
           WHERE users.email = ?');
         $user->execute([$email]);
         return $user->fetch();
@@ -47,11 +47,11 @@ class Users extends DB
     static public function register($login, $email, $password){
 
         $user = Users::pdo()->prepare('
-          INSERT INTO users(login, email, password ,role, money, created, updated) 
-          VALUES(?, ?, ?, ?,?, ?, ?);
+          INSERT INTO users(login, realname, email, password) 
+          VALUES(?, ?, ?, ?);
          ');
 
-        return $user->execute([$login, $email, $password, 'user', 0, time(), time()]);
+        return $user->execute([$login, $login, $email, $password]);
 
     }
 

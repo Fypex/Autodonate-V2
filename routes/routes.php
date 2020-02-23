@@ -25,7 +25,7 @@ Flight::route('GET /logout', array(new Controllers\auth\AuthController(), 'logou
 Flight::route('GET /panel', array(new Controllers\panel\PanelController(), 'index'), 'admin');
 Flight::route('GET /panel/payment', array(new Controllers\panel\PaymentController(), 'index'), 'admin');
 
-Flight::route('POST|GET /panel/payment/freekassa', array(new Controllers\panel\PaymentController(), 'freekassa'), 'admin');
+Flight::route('POST /freekassa/payment/confirmation', array(new Controllers\panel\PaymentController(), 'freekassa'), 'admin');
 Flight::route('POST /panel/payment/unitpay', array(new Controllers\panel\PaymentController(), 'unitpay'), 'admin');
 
 Flight::route('GET /panel/privileges', array(new Controllers\panel\PrivilegesController(), 'index'), 'admin');

@@ -6,10 +6,10 @@ use Models\DB;
 $env = new Dotenv();
 $env->load('../.env');
 
-
-Flight::set('flight.views.path', $_ENV['VIEW_FOLDER']);
+error_reporting($_ENV['SHOW_ERRORS']);
 Flight::set('flight.log_errors', $_ENV['SHOW_ERRORS']);
 Flight::set('flight.handle_errors', $_ENV['SHOW_ERRORS']);
+Flight::set('flight.views.path', $_ENV['VIEW_FOLDER']);
 
 
 
