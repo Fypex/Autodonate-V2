@@ -5,6 +5,14 @@ namespace Models;
 class Pay extends DB
 {
 
+    public static function getPurchase($id){
+
+        $payment = Pay::pdo()->prepare('SELECT * FROM purchases WHERE uniqid = ? AND status = ? LIMIT 1');
+        $payment->execute([$id, 0]);
+        return $payment->fetch();
+
+    }
+
     public static function addPurchase($id, $system_id, $login, $amount, $timestamp)
     {
 
@@ -73,6 +81,20 @@ class Pay extends DB
         $payments = Pay::pdo()->prepare('SELECT * FROM payment_systems WHERE status = ?');
         $payments->execute(['on']);
         return $payments->fetchAll();
+
+    }
+
+    public static function updatePurchase($id, $status)
+    {
+
+
+        $payment = Pay::pdo()->prepare('
+            UPDATE purchases
+            SET status = ?
+            WHERE id = ?');
+
+        $payment->execute([$status, $id]);
+
 
     }
 
